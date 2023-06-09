@@ -1,40 +1,50 @@
 import './App.css';
 
-function Header() {
+function Header(props) {
     return(
       <header>
-        <h1><a href="/">WEB</a></h1>
+        <h1><a href="/">{props.title}</a></h1>
       </header>
     )
 }
 
-function Nav() {
+function Nav(props) {
+  const lis = []
+
+  for (let i = 0; i < props.topics.length; i++) {
+    let t = props.topics[i];
+    lis.push(<li><a href={'/read/'+t.id}>{t.title}</a></li>)    
+  }
+
   return (
     <nav>
       <ol>
-        <li><a href="/read/1">HTML</a></li>
-        <li><a href="/read/2">CSS</a></li>
-        <li><a href="/read/3">JavaScript</a></li>
+        {lis}
       </ol>
     </nav>
   )
 }
 
-function Article() {
+function Article(props) {
   return (
     <article>
-      <h2>Welcome</h2>
-      Hello, WEB
+      <h2>{props.title}</h2>
+      {props.body}
     </article>
   )
 }
 
 function App() {
+  const topics = [
+    {id:1, title:'HTML', body:'HTML is ...'},
+    {id:2, title:'CSS', body:'CSS is ...'},
+    {id:3, title:'JavaScript', body:'JavaScript is ...'}
+  ]
   return (
-    <div className="App">
-      <Header />
-      <Nav />
-      <Article />
+    <div>
+      <Header title="REACT" />
+      <Nav topics={topics} />
+      <Article title="Welcome" body="Hello, Web"/>
     </div>
   );
 }
